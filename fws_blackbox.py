@@ -63,8 +63,6 @@ class FWSBlackBox1Plant:
         score = 1000./self.tot_err + 1000./np.fabs(self.power)
         if score < 1:
             return 0
-        elif score > 10:
-            return 100
         else:
             return score*10
 
