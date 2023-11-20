@@ -10,9 +10,9 @@ GRAVITY_ACC     = 9.8   # in m/s^2
 CART_MASS       = 1.0   # in kg
 POLE_MASS       = 0.1   # in kg
 POLE_LENGTH     = 0.5   # in m
-KP_CONST        = 23
-KI_CONST        = 0.2
-KD_CONST        = 3
+KP_CONST        = 1
+KI_CONST        = 0.1
+KD_CONST        = 1
 ANGLE_REF       = 0.0
 
 
@@ -24,12 +24,16 @@ def controlInput(state:np.ndarray) -> tuple:
     global last_err
     global sum_err
 
+    # Calculate compensator'
+    eps     = 60
+    comp    = -(1.0 + eps)*(CART_MASS + POLE_MASS)*GRAVITY_ACC*theta
+
     # Calculate control law
-    err         = ANGLE_REF - float(state[2])
+    err         = ANGLE_REF - theta
     sum_err     += err
     diff_err    = err - last_err
     last_err    = err
-    u           = KP_CONST*err + KI_CONST*sum_err + KD_CONST*diff_err
+    u           = KP_CONST*err + KI_CONST*sum_err + KD_CONST*diff_err + comp
 
     # Determine direction
     if u < 0:

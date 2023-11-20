@@ -24,12 +24,22 @@ def controlInput(state:np.ndarray) -> tuple:
     global last_err
     global sum_err
 
+    # Get states
+    x           = float(state[0])
+    x_dot       = float(state[1])
+    theta       = float(state[2])
+    theta_dot   = float(state[3])
+
+    # Calculate compensator'
+    eps     = 60
+    comp    = -(1.0 + eps)*(CART_MASS + POLE_MASS)*GRAVITY_ACC*theta
+
     # Modify control law
     err         = ANGLE_REF - float(state[2])
     sum_err     += err
     diff_err    = err - last_err
     last_err    = err
-    u           = KP_CONST*err + KI_CONST*sum_err + KD_CONST*diff_err
+    u           = KP_CONST*err + KI_CONST*sum_err + KD_CONST*diff_err + comp
 
     # Determine direction
     if u < 0:
