@@ -36,8 +36,8 @@ float calcNextSetPoint() {
 
 
 float calcNextInput(float r, float xs) {
-  static float  kp  = 0.0,
-                ki  = 0.1;
+  static float  kp  = 7.0,
+                ki  = 0.2;
   static float  err     = 0,
                 sum_err = 0;
 
