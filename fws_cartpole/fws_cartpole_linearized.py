@@ -10,9 +10,9 @@ GRAVITY_ACC     = 9.8   # in m/s^2
 CART_MASS       = 1.0   # in kg
 POLE_MASS       = 0.1   # in kg
 POLE_LENGTH     = 0.5   # in m
-KP_CONST        = 23
-KI_CONST        = 0.2
-KD_CONST        = 3
+KP_CONST        = 10
+KI_CONST        = 0.0
+KD_CONST        = 35
 ANGLE_REF       = 0.0
 
 
@@ -30,8 +30,8 @@ def controlInput(state:np.ndarray) -> tuple:
     theta       = float(state[2])
     theta_dot   = float(state[3])
 
-    # Calculate compensator'
-    eps     = 60
+    # Calculate compensator
+    eps     = 0
     comp    = -(1.0 + eps)*(CART_MASS + POLE_MASS)*GRAVITY_ACC*theta
 
     # Modify control law
